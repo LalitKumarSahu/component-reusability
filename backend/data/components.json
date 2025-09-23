@@ -1,0 +1,34 @@
+{
+  "Mobile": [
+    "Battery",
+    "Screen",
+    "Camera",
+    "Charging Port",
+    "Speaker"
+  ],
+  "Laptop": [
+    "RAM",
+    "HDD/SSD",
+    "Keyboard",
+    "Battery",
+    "Screen"
+  ],
+  "TV": [
+    "Screen",
+    "Power Board",
+    "Speakers",
+    "Remote Sensor"
+  ],
+  "Tablet": [
+    "Battery",
+    "Screen",
+    "Charging Port",
+    "Camera"
+  ],
+  "Smartwatch": [
+    "Battery",
+    "Strap",
+    "Screen",
+    "Heart-rate Sensor"
+  ]
+}
