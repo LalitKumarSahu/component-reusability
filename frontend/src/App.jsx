@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// यदि आप आइकन का उपयोग करना चाहते हैं, तो एक लाइब्रेरी इंस्टॉल करें, जैसे react-icons
-// import { FaMobileAlt, FaLaptop, FaTv, FaTabletAlt, FaWatch } from 'react-icons/fa';
+
 
 function App(){
   const [device, setDevice] = useState('Mobile');
