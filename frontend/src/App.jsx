@@ -55,18 +55,21 @@ function App(){
       </nav>
 
       <main>
-        <section className="hero">
+       <section className="hero">
           <h2>Choose a device to see reusable parts</h2>
-          <select value={device} onChange={(e)=>setDevice(e.target.value)}>
+          <select value={device} onChange={(e) => setDevice(e.target.value)}>
             <option value="Mobile">Mobile</option>
             <option value="Laptop">Laptop</option>
             <option value="TV">TV</option>
             <option value="Tablet">Tablet</option>
-            <option value="Smartwatch">Smartwatch</option>
+            <option value="Desktop PC">Desktop PC</option>
+            <option value="Game Console">Game Console</option>
+            <option value="Camera">Camera</option>
+            <option value="Headphones">Headphones</option>
+            <option value="Printer">Printer</option>
           </select>
           {/* Removed redundant fetch button here as components fetch on device change */}
         </section>
-
         <section className="results">
           <h3>Reusable Components for {device}</h3>
           {loadingComponents && <p>Loading components...</p>}
@@ -77,21 +80,27 @@ function App(){
           </ul>
         </section>
 
-        <section className="map-section">
+       <section className="map-section">
           <h3>Nearby Recycling Centers (dummy data)</h3>
           {loadingCenters && <p>Loading recycling centers...</p>}
           <div className="centers">
-            {!loadingCenters && centers.length === 0 && <p>Click "Show Recycling Centers" to load dummy centers.</p>}
-            {centers.map(center => (
+            {!loadingCenters && centers.length === 0 && (
+              <p>Click "Show Recycling Centers" to load dummy centers.</p>
+            )}
+            {centers.map((center) => (
               <div className="center-card" key={center.id}>
                 <h4>{center.name}</h4>
                 <p>{center.address}</p>
-                <p>Lat: {center.lat}, Lng: {center.lng}</p>
+                <p>
+                  Lat: {center.lat}, Lng: {center.lng}
+                </p>
+                <p>{center.contact}</p>
+                <p>{Array.isArray(center.types) ? center.types.join(", ") : center.types}</p>
               </div>
             ))}
           </div>
         </section>
-
+        
         <section className="feedback">
           <h3>Share Your Recycling Experience</h3>
           <FeedbackForm device={device} />

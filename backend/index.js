@@ -27,10 +27,52 @@ app.get('/api/components/:device', (req, res) => {
 
 // Dummy recycling centers (could be replaced by Google Places/Maps later)
 app.get('/api/recycling-centers', (req, res) => {
-  const centers = [
-    { id: 1, name: 'Green Planet Recycling', address: 'MG Road, Pune', lat: 18.5204, lng: 73.8567 },
-    { id: 2, name: 'E-Waste Hub', address: 'Sector 18, Noida', lat: 28.5743, lng: 77.3540 },
-    { id: 3, name: 'RecycleIt Center', address: 'Koramangala, Bangalore', lat: 12.9352, lng: 77.6245 }
+const centers = [
+    {
+      id: 1,
+      name: "Lucknow E-Recycle Hub",
+      address: "Sector D, Transport Nagar, Lucknow, Uttar Pradesh",
+      lat: 26.8414,
+      lng: 80.9424,
+      contact: "091234567890",
+      types: ["e-waste", "batteries", "mobile parts"],
+    },
+    {
+      id: 2,
+      name: "GreenScrap Depot",
+      address: "Mohanlalganj Industrial Area, Lucknow, Uttar Pradesh",
+      lat: 26.7488,
+      lng: 80.947,
+      contact: "098765432101",
+      types: ["metal scrap", "plastic", "paper"],
+    },
+    {
+      id: 3,
+      name: "Old Paper & Plastics Recycling - Triveni Nagar",
+      address: "Sitapur Road, Triveni Nagar, Lucknow, Uttar Pradesh",
+      lat: 26.889,
+      lng: 80.9475,
+      contact: "091098765432",
+      types: ["paper", "plastic"],
+    },
+    {
+      id: 4,
+      name: "Tech Waste Collectors",
+      address: "Alambagh, Lucknow, Uttar Pradesh",
+      lat: 26.8537,
+      lng: 80.9386,
+      contact: "090112233445",
+      types: ["electronics", "batteries", "screens"],
+    },
+    {
+      id: 5,
+      name: "Kabadi Center Qaisar Bagh",
+      address: "Kabadi Market, Purniya Chauraha, Qaisar Bagh, Lucknow",
+      lat: 26.8447,
+      lng: 80.949,
+      contact: "089765432100",
+      types: ["scrap metal", "paper", "plastic"],
+    },
   ];
   res.json(centers);
 });

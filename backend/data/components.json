@@ -1,34 +1,12 @@
 {
-  "Mobile": [
-    "Battery",
-    "Screen",
-    "Camera",
-    "Charging Port",
-    "Speaker"
-  ],
-  "Laptop": [
-    "RAM",
-    "HDD/SSD",
-    "Keyboard",
-    "Battery",
-    "Screen"
-  ],
-  "TV": [
-    "Screen",
-    "Power Board",
-    "Speakers",
-    "Remote Sensor"
-  ],
-  "Tablet": [
-    "Battery",
-    "Screen",
-    "Charging Port",
-    "Camera"
-  ],
-  "Smartwatch": [
-    "Battery",
-    "Strap",
-    "Screen",
-    "Heart-rate Sensor"
-  ]
+  "Mobile": ["Battery", "Screen", "Camera", "Charging Port", "Speaker", "Microphone", "Motherboard"],
+  "Laptop": ["RAM", "HDD/SSD", "Keyboard", "Battery", "Screen", "Motherboard", "Touchpad", "Cooling Fan"],
+  "TV": ["Screen", "Power Board", "Speakers", "Remote Sensor", "Motherboard", "HDMI Port"],
+  "Tablet": ["Battery", "Screen", "Charging Port", "Camera", "Speakers", "Motherboard"],
+  "Smartwatch": ["Battery", "Strap", "Screen", "Heart-rate Sensor", "Charging Pin", "Motherboard"],
+  "Desktop PC": ["CPU", "GPU", "RAM", "HDD/SSD", "Motherboard", "PSU", "Cooling Fan"],
+  "Game Console": ["Motherboard", "HDMI Port", "Controller Port", "Cooling Fan", "HDD/SSD", "Power Supply"],
+  "Camera": ["Lens", "Battery", "Sensor", "Screen", "Memory Card Slot", "Flash"],
+  "Headphones": ["Speakers", "Battery", "Bluetooth Module", "Microphone", "Charging Port"],
+  "Printer": ["Ink Cartridge/Toner", "Paper Tray", "Motherboard", "Power Supply", "Rollers", "Screen"]
 }
