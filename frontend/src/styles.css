@@ -1,15 +1,140 @@
-body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; padding:0; background:#f4f7f6; color:#0b3d2e;}
-.container { max-width:1000px; margin:0 auto; padding:16px; }
-.navbar { display:flex; justify-content:space-between; align-items:center; padding:12px 0; }
-.nav-links button { margin-left:8px; padding:8px 12px; border-radius:8px; border:1px solid #ccc; background:white; cursor:pointer;}
-.hero { background: linear-gradient(90deg, #e6f6ec, #f0f9ff); padding:16px; border-radius:8px; margin-bottom:12px; }
-select { padding:8px; margin-top:8px; }
-.actions { margin-top:8px; }
-.results, .map-section, .feedback { background:white; padding:12px; border-radius:8px; margin-top:12px; }
-ul { list-style: disc; padding-left:20px; }
-.center-card { border:1px dashed #bcd7c0; padding:8px; border-radius:6px; margin-bottom:8px; background:#fbfffb;}
-.feedback-form { display:flex; flex-direction:column; gap:8px; }
-textarea { min-height:80px; padding:8px; }
-.success { color: green; }
-.error { color: red; }
-footer { text-align:center; margin-top:16px; opacity:0.8; font-size:14px; }
+/* 🌟 Global Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: #f5f7fa;
+  color: #1a2e35;
+  line-height: 1.6;
+}
+
+/* 🌟 Layout */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 🌟 Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e0e6eb;
+}
+
+.nav-links button {
+  margin-left: 10px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  background: #ffffff;
+  color: #1a2e35;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.nav-links button:hover {
+  background: #e6f6ec;
+  transform: translateY(-2px);
+}
+
+/* 🌟 Hero Section */
+.hero {
+  background: linear-gradient(120deg, #e6f6ec, #f0f9ff);
+  padding: 24px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* 🌟 Inputs */
+select,
+textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cfd9df;
+  font-size: 15px;
+  transition: border 0.25s ease;
+}
+
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4dab8b;
+  box-shadow: 0 0 0 3px rgba(77, 171, 139, 0.2);
+}
+
+.actions {
+  margin-top: 12px;
+}
+
+/* 🌟 Card-like Sections */
+.card,
+.results,
+.map-section,
+.feedback,
+.center-card {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.center-card {
+  border: 1px dashed #9fd6af;
+  background: #f9fffb;
+}
+
+/* 🌟 Lists */
+ul {
+  list-style: disc;
+  padding-left: 22px;
+}
+
+/* 🌟 Feedback */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.success {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.error {
+  color: #d93025;
+  font-weight: 600;
+}
+
+/* 🌟 Footer */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* 🌟 Responsive */
+@media (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .nav-links button {
+    margin-left: 0;
+    width: 100%;
+  }
+}
