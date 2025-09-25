@@ -20,7 +20,7 @@ import './header.css'; // Import the header-specific styles
 const drawerWidth = 240;
 
 function Header(props) {
-  const { window, onShowCenters } = props;
+  const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -37,9 +37,17 @@ function Header(props) {
       <Divider className="drawer-divider" />
       <List className="drawer-list">
         <ListItem disablePadding>
-          <ListItemButton className="drawer-button" onClick={onShowCenters}>
+          <ListItemButton className="drawer-button">
             <ListItemText 
-              primary="Show Centers" 
+              primary="About" 
+              className="drawer-text"
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton className="drawer-button">
+            <ListItemText 
+              primary="Contact" 
               className="drawer-text"
             />
           </ListItemButton>
@@ -75,11 +83,11 @@ function Header(props) {
 
           {/* Right-side buttons */}
           <Box className="header-actions">
-            <Button 
-              onClick={onShowCenters} 
-              className="header-btn"
-            >
-              Show Centers
+            <Button className="header-btn">
+              About
+            </Button>
+            <Button className="header-btn">
+              Contact
             </Button>
           </Box>
         </Toolbar>
@@ -115,7 +123,6 @@ function Header(props) {
 
 Header.propTypes = {
   window: PropTypes.func,
-  onShowCenters: PropTypes.func.isRequired,
 };
 
 export default Header;

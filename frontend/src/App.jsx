@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -8,6 +9,7 @@ import RecyclingCenters from "./components/RecyclingCenters";
 import FeedbackForm from "./components/FeedbackForm";
 
 function App() {
+  const navigate = useNavigate();
   const [device, setDevice] = useState("Mobile");
   const [components, setComponents] = useState([]);
   const [centers, setCenters] = useState([]);
@@ -55,9 +57,13 @@ function App() {
     }
   };
 
+  const handleHomePickup = () => {
+    navigate("/home-pickup");
+  };
+
   return (
     <>
-      <Header onShowCenters={fetchCenters} />
+      <Header />
       <div className="container">
         <main style={{ marginTop: 34, padding: "1rem" }}>
           <DeviceSelector device={device} setDevice={setDevice} />
@@ -67,7 +73,33 @@ function App() {
             loading={loadingComponents}
             error={error}
           />
-          <RecyclingCenters centers={centers} loading={loadingCenters} />
+          <RecyclingCenters 
+            centers={centers} 
+            loading={loadingCenters} 
+            onLoadCenters={fetchCenters} 
+          />
+
+          {/* Home Pickup CTA Section */}
+          <section className="pickup-cta">
+            <div className="cta-content">
+              <div className="cta-text">
+                <h3>🚚 Too many items to bring yourself?</h3>
+                <p>
+                  Get a free pickup from your home! We'll evaluate your items
+                  and pay you on the spot.
+                </p>
+                <div className="cta-features">
+                  <span>✅ Free doorstep pickup</span>
+                  <span>✅ Instant valuation</span>
+                  <span>✅ Secure payment</span>
+                </div>
+              </div>
+              <button onClick={handleHomePickup} className="pickup-cta-btn">
+                Schedule Home Pickup
+              </button>
+            </div>
+          </section>
+
           <FeedbackForm device={device} />
         </main>
       </div>
