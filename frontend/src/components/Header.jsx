@@ -15,9 +15,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import './header.css'; // Import the header-specific styles
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
 
 function Header(props) {
   const { window, onShowCenters } = props;
@@ -28,22 +28,20 @@ function Header(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        ReuseHub
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+    <Box onClick={handleDrawerToggle} className="drawer-content">
+      <div className="drawer-header">
+        <Typography variant="h6" className="drawer-logo">
+          ReuseHub
+        </Typography>
+      </div>
+      <Divider className="drawer-divider" />
+      <List className="drawer-list">
         <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={onShowCenters}>
-            <ListItemText primary="Show Centers" />
+          <ListItemButton className="drawer-button" onClick={onShowCenters}>
+            <ListItemText 
+              primary="Show Centers" 
+              className="drawer-text"
+            />
           </ListItemButton>
         </ListItem>
       </List>
@@ -55,38 +53,39 @@ function Header(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      {/* Fixed AppBar background */}
-      <AppBar component="nav" color="default" sx={{ backgroundColor: '#1976d2' }}>
-        <Toolbar>
+      
+      {/* Modern Header using CSS classes */}
+      <AppBar position="static" className="modern-header">
+        <Toolbar className="header-toolbar">
+          {/* Mobile menu button */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            className="mobile-menu-btn"
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            Component Reusability
+
+          {/* Title */}
+          <Typography variant="h6" component="div" className="header-title">
+            ReUseIt
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-            <Button onClick={onShowCenters} sx={{ color: '#fff' }}>
+
+          {/* Right-side buttons */}
+          <Box className="header-actions">
+            <Button 
+              onClick={onShowCenters} 
+              className="header-btn"
+            >
               Show Centers
             </Button>
           </Box>
         </Toolbar>
       </AppBar>
 
+      {/* Mobile Drawer */}
       <nav>
         <Drawer
           container={container}
@@ -96,6 +95,7 @@ function Header(props) {
           ModalProps={{
             keepMounted: true,
           }}
+          className="mobile-drawer"
           sx={{
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
@@ -106,8 +106,8 @@ function Header(props) {
       </nav>
 
       {/* Adds spacing below AppBar */}
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
+      <Box component="main">
+        <Toolbar className="header-spacer" />
       </Box>
     </Box>
   );

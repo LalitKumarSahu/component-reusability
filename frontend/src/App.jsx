@@ -1,30 +1,37 @@
-// src/App.js
-import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import DeviceSelector from "./components/DeviceSelector";
+import ComponentList from "./components/ComponentList";
+import RecyclingCenters from "./components/RecyclingCenters";
+import FeedbackForm from "./components/FeedbackForm";
 
 function App() {
-  const [device, setDevice] = useState('Mobile');
+  const [device, setDevice] = useState("Mobile");
   const [components, setComponents] = useState([]);
   const [centers, setCenters] = useState([]);
   const [loadingComponents, setLoadingComponents] = useState(false);
   const [loadingCenters, setLoadingCenters] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  // Fetch components when device changes
   useEffect(() => {
     fetchComponents();
   }, [device]);
 
   const fetchComponents = async () => {
     setLoadingComponents(true);
-    setError('');
+    setError("");
     try {
-      const res = await axios.get(`http://localhost:5000/api/components/${device}`);
+      const res = await axios.get(
+        `http://localhost:5000/api/components/${device}`
+      );
       setComponents(res.data.components || []);
     } catch (e) {
       console.error("Error fetching components:", e);
-      setError('Could not fetch components. Make sure backend is running and device exists.');
+      setError(
+        "Could not fetch components. Make sure backend is running and device exists."
+      );
       setComponents([]);
     } finally {
       setLoadingComponents(false);
@@ -33,13 +40,15 @@ function App() {
 
   const fetchCenters = async () => {
     setLoadingCenters(true);
-    setError('');
+    setError("");
     try {
-      const res = await axios.get('http://localhost:5000/api/recycling-centers');
+      const res = await axios.get(
+        "http://localhost:5000/api/recycling-centers"
+      );
       setCenters(res.data || []);
     } catch (e) {
       console.error("Error fetching recycling centers:", e);
-      setError('Could not fetch recycling centers.');
+      setError("Could not fetch recycling centers.");
       setCenters([]);
     } finally {
       setLoadingCenters(false);
@@ -47,99 +56,23 @@ function App() {
   };
 
   return (
-    <div className="container">
-      {/* Header with AppBar + Drawer */}
+    <>
       <Header onShowCenters={fetchCenters} />
-
-      <main style={{ marginTop: 64, marginLeft: 0, padding: '1rem' }}>
-        {/* Device Selector */}
-        <section className="hero">
-          <h2>Choose a device to see reusable parts</h2>
-          <select value={device} onChange={(e) => setDevice(e.target.value)}>
-            <option value="Mobile">Mobile</option>
-            <option value="Laptop">Laptop</option>
-            <option value="TV">TV</option>
-            <option value="Tablet">Tablet</option>
-            <option value="Desktop PC">Desktop PC</option>
-            <option value="Game Console">Game Console</option>
-            <option value="Camera">Camera</option>
-            <option value="Headphones">Headphones</option>
-            <option value="Printer">Printer</option>
-          </select>
-        </section>
-
-        {/* Components List */}
-        <section className="results">
-          <h3>Reusable Components for {device}</h3>
-          {loadingComponents && <p>Loading components...</p>}
-          {error && <p className="error">{error}</p>}
-          {!loadingComponents && !error && components.length === 0 && <p>No components found for {device}.</p>}
-          <ul>
-            {components.map((c, idx) => <li key={idx}>{c}</li>)}
-          </ul>
-        </section>
-
-        {/* Recycling Centers */}
-        <section className="map-section">
-          <h3>Nearby Recycling Centers</h3>
-          {loadingCenters && <p>Loading recycling centers...</p>}
-          <div className="centers">
-            {!loadingCenters && centers.length === 0 && <p>Click "Show Centers" in the header to load centers.</p>}
-            {centers.map((center) => (
-              <div className="center-card" key={center.id}>
-                <h4>{center.name}</h4>
-                <p>{center.address}</p>
-                <p>Lat: {center.lat}, Lng: {center.lng}</p>
-                <p>{center.contact}</p>
-                <p>{Array.isArray(center.types) ? center.types.join(", ") : center.types}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Feedback Form */}
-        <section className="feedback">
-          <h3>Share Your Recycling Experience</h3>
+      <div className="container">
+        <main style={{ marginTop: 34, padding: "1rem" }}>
+          <DeviceSelector device={device} setDevice={setDevice} />
+          <ComponentList
+            device={device}
+            components={components}
+            loading={loadingComponents}
+            error={error}
+          />
+          <RecyclingCenters centers={centers} loading={loadingCenters} />
           <FeedbackForm device={device} />
-        </section>
-      </main>
-
-      <footer>
-        <p>Made for hackathon — Component Reusability</p>
-      </footer>
-    </div>
-  );
-}
-
-function FeedbackForm({ device }) {
-  const [recycled, setRecycled] = useState('no');
-  const [notes, setNotes] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const submit = async (e) => {
-    e.preventDefault();
-    console.log({ device, recycled, notes });
-
-    // Demo only
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 2000);
-    setRecycled('no');
-    setNotes('');
-  };
-
-  return (
-    <form onSubmit={submit} className="feedback-form">
-      <label>Device: <strong>{device}</strong></label>
-      <label htmlFor="recycled-status">Did you recycle successfully?</label>
-      <select id="recycled-status" value={recycled} onChange={(e) => setRecycled(e.target.value)}>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-      </select>
-      <label htmlFor="notes">Notes (optional)</label>
-      <textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any comments?" />
-      <button type="submit">Submit Feedback</button>
-      {submitted && <p className="success">Thanks! Feedback recorded (demo only).</p>}
-    </form>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 }
 
