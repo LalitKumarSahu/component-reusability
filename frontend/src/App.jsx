@@ -7,6 +7,7 @@ import DeviceSelector from "./components/DeviceSelector";
 import ComponentList from "./components/ComponentList";
 import RecyclingCenters from "./components/RecyclingCenters";
 import FeedbackForm from "./components/FeedbackForm";
+import AIChatBot from "./components/AIChatBot"; // Add this import
 
 function App() {
   const navigate = useNavigate();
@@ -104,6 +105,9 @@ function App() {
         </main>
       </div>
       <Footer />
+      
+      {/* AI Chatbot - positioned at bottom right */}
+      <AIChatBot />
     </>
   );
 }
