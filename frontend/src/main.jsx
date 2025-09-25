@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
 import HomePickup from './components/HomePickup'
 import MapView from './components/MapView'
+import About from './components/About'
+import Contact from './components/Contact'
 import './styles.css'
 import './components/map-styles.css'
 
@@ -14,6 +16,8 @@ createRoot(document.getElementById('root')).render(
         <Route path='/' element={<App />} />
         <Route path='/home-pickup' element={<HomePickup />} />
         <Route path='/map' element={<MapView />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

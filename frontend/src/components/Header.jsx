@@ -1,6 +1,7 @@
 // src/components/Header.js
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,23 +22,39 @@ const drawerWidth = 240;
 
 function Header(props) {
   const { window } = props;
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const handleAboutClick = () => {
+    navigate('/about');
+    setMobileOpen(false);
+  };
+
+  const handleContactClick = () => {
+    navigate('/contact');
+    setMobileOpen(false);
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+    setMobileOpen(false);
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} className="drawer-content">
       <div className="drawer-header">
-        <Typography variant="h6" className="drawer-logo">
-          ReuseHub
+        <Typography variant="h6" className="drawer-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+          ReUseIt
         </Typography>
       </div>
       <Divider className="drawer-divider" />
       <List className="drawer-list">
         <ListItem disablePadding>
-          <ListItemButton className="drawer-button">
+          <ListItemButton className="drawer-button" onClick={handleAboutClick}>
             <ListItemText 
               primary="About" 
               className="drawer-text"
@@ -45,7 +62,7 @@ function Header(props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton className="drawer-button">
+          <ListItemButton className="drawer-button" onClick={handleContactClick}>
             <ListItemText 
               primary="Contact" 
               className="drawer-text"
@@ -77,16 +94,22 @@ function Header(props) {
           </IconButton>
 
           {/* Title */}
-          <Typography variant="h6" component="div" className="header-title">
+          <Typography 
+            variant="h6" 
+            component="div" 
+            className="header-title"
+            onClick={handleLogoClick}
+            sx={{ cursor: 'pointer' }}
+          >
             ReUseIt
           </Typography>
 
           {/* Right-side buttons */}
           <Box className="header-actions">
-            <Button className="header-btn">
+            <Button className="header-btn" onClick={handleAboutClick}>
               About
             </Button>
-            <Button className="header-btn">
+            <Button className="header-btn" onClick={handleContactClick}>
               Contact
             </Button>
           </Box>
