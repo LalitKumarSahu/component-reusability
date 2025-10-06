@@ -1,4 +1,4 @@
-#       Component Reusability - Hackathon Project
+  # Component Reusability - Hackathon Project
 
 <div align="center">
 
