@@ -1,4 +1,4 @@
-  # Component Reusability - Hackathon Project
+# Component Reusability - Hackathon Project
 
 <div align="center">
 
@@ -146,7 +146,7 @@ Contributions are welcome! Feel free to:
 
 This project was created for a hackathon and is open for educational purposes.
 
-## 👥 Team
+## 👥 Team - HackOps
 
 Built with 💚 during [Samsung Innovation Campus Hackathon]
 
