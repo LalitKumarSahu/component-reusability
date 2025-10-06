@@ -1,4 +1,4 @@
-# Component Reusability - Hackathon Project
+# 🔄 Component Reusability
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 
 **Revolutionizing electronics sustainability through intelligent component reusability tracking**
 
-[Demo](https://component-reuse-frontend.vercel.app/) • [Features](#-features) • [Quick Start](#-quick-start) • [Tech Stack](#-tech-stack)
+[Demo](#-demo) • [Features](#-features) • [Quick Start](#-quick-start) • [Tech Stack](#-tech-stack)
 
 </div>
 
@@ -148,7 +148,9 @@ This project was created for a hackathon and is open for educational purposes.
 
 ## 👥 Team
 
-Built with 💚 during [Samsung Innovation Campus Hackathon]
+Built with 💚 for a sustainable future
+
+**Star ⭐ this repo if you find it helpful!**
 
 ---
 
@@ -156,6 +158,6 @@ Built with 💚 during [Samsung Innovation Campus Hackathon]
 
 **Made with ♻️ for a sustainable future**
 
-[⬆ Back to Top](component-reusability)
+[⬆ Back to Top](#component-reusability)
 
 </div>
