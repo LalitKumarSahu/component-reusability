@@ -81,18 +81,32 @@ Navigate to `http://localhost:5173` and start exploring!
 ```
 component-reusability/
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Header.jsx
-│   │   │   └── header.css
-│   │   ├── App.jsx
-│   │   └── styles.css
+│   ├── components/
+│   │   ├── AIChatBot.jsx
+│   │   ├── About.jsx
+│   │   ├── ComponentList.jsx
+│   │   ├── Contact.jsx
+│   │   ├── DeviceSelector.jsx
+│   │   ├── FeedbackForm.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Header.jsx
+│   │   ├── HomePickup.jsx
+│   │   ├── MapView.jsx
+│   │   ├── RecyclingCenters.jsx
+│   │   ├── footer.css
+│   │   ├── header.css
+│   │   ├── map-styles.css
+│   │   └── HomePickup.css
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── styles.css
 │   └── package.json
 ├── backend/
 │   ├── data/
 │   │   └── components.json
-│   ├── server.js
-│   └── package.json
+│   ├── index.js
+│   ├── package.json
+│   └── package-lock.json
 └── README.md
 ```
 
