@@ -1,7 +1,5 @@
 # Component Reusability - Hackathon Project
 
-# 🔄 Component Reusability
-
 <div align="center">
 
 ![Component Reusability Banner](https://img.shields.io/badge/Hackathon-Project-00d2ff?style=for-the-badge)
@@ -136,7 +134,7 @@ This project was created for a hackathon and is open for educational purposes.
 
 ## 👥 Team
 
-Built with 💚 during [Hackathon Name]
+Built with 💚 during [Samsung Innovation Campus Hackathon]
 
 ---
 
