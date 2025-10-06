@@ -1,10 +1,6 @@
 <div align="center">
-  
+
 # Component Reusability - Hackathon Project
-
-</div>
-
-<div align="center">
 
 ![Component Reusability Banner](https://img.shields.io/badge/Hackathon-Project-00d2ff?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)
