@@ -9,7 +9,7 @@
 
 **Revolutionizing electronics sustainability through intelligent component reusability tracking**
 
-[Demo](#-demo) • [Features](#-features) • [Quick Start](#-quick-start) • [Tech Stack](#-tech-stack)
+[Demo](https://component-reuse-frontend.vercel.app/) • [Features](#-features) • [Quick Start](#-quick-start) • [Tech Stack](#-tech-stack)
 
 </div>
 
