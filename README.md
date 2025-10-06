@@ -156,6 +156,6 @@ Built with 💚 during [Samsung Innovation Campus Hackathon]
 
 **Made with ♻️ for a sustainable future**
 
-[⬆ Back to Top](#-component-reusability)
+[⬆ Back to Top](component-reusability)
 
 </div>
