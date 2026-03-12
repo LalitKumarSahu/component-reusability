@@ -1,0 +1,17 @@
+# Environment variables - KABHI PUSH MAT KARNA!
+.env
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
