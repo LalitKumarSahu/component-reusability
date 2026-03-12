@@ -1,0 +1,17 @@
+.vercel
+# Environment variables - KABHI PUSH MAT KARNA!
+.env
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Uploads (local)
+uploads/
