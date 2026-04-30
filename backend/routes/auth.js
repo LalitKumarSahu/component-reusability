@@ -1,38 +1,38 @@
 const express = require('express');
 const jwt     = require('jsonwebtoken');
-const User    = require('../models/User');        // models folder se
-const { protect } = require('../middleware/auth'); // middleware folder se
+const User    = require('../models/User');        // from models folder
+const { protect } = require('../middleware/auth'); // from middleware folder
 
 const router = express.Router();
 
-// Token banane ka helper function
+// Helper function to generate token
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
 // ────────────────────────────────────────────────────────────
-// POST /api/auth/register   ← Naya account banana
+// POST /api/auth/register   ← Create a new account
 // Body: { name, email, password, phone, city }
 // ────────────────────────────────────────────────────────────
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, phone, city } = req.body;
 
-    // Koi field khali nahi honi chahiye
+    // All required fields must be provided
     if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Naam, email aur password zaroori hain.' });
+      return res.status(400).json({ error: 'Name, email, and password are required.' });
     }
 
-    // Ye email pehle se registered to nahi hai?
+    // Check if the email is already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ error: 'Ye email pehle se registered hai.' });
+      return res.status(409).json({ error: 'This email is already registered.' });
     }
 
-    // User banao (password automatic hash hoga — model mein dekho)
+    // Create user (password will be hashed automatically — see model)
     const user = await User.create({ name, email, password, phone, city });
 
     res.status(201).json({
-      message: 'Account ban gaya! 🎉',
+      message: 'Account created successfully! 🎉',
       token: generateToken(user._id),
       user: {
         id:    user._id,
@@ -49,7 +49,7 @@ router.post('/register', async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// POST /api/auth/login   ← Login karna
+// POST /api/auth/login   ← Login user
 // Body: { email, password }
 // ────────────────────────────────────────────────────────────
 router.post('/login', async (req, res) => {
@@ -57,15 +57,15 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email aur password dono chahiye.' });
+      return res.status(400).json({ error: 'Both email and password are required.' });
     }
 
-    // Password bhi saath lao (normally hidden rehta hai)
+    // Fetch user including password (normally hidden)
     const user = await User.findOne({ email }).select('+password');
 
-    // User mila? Password sahi hai?
+    // Check if user exists and password is correct
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ error: 'Email ya password galat hai.' });
+      return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
     res.json({
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// GET /api/auth/me   ← Apni profile dekhna (login zaroori)
+// GET /api/auth/me   ← Get current user's profile (login required)
 // ────────────────────────────────────────────────────────────
 router.get('/me', protect, async (req, res) => {
   try {
@@ -100,7 +100,7 @@ router.get('/me', protect, async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// PUT /api/auth/update-profile   ← Profile update karna
+// PUT /api/auth/update-profile   ← Update user profile
 // ────────────────────────────────────────────────────────────
 router.put('/update-profile', protect, async (req, res) => {
   try {
@@ -109,10 +109,10 @@ router.put('/update-profile', protect, async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
       { name, phone, city },
-      { new: true }   // Updated user return karo
+      { new: true }   // Return updated user
     );
 
-    res.json({ message: 'Profile update ho gaya!', user: updatedUser });
+    res.json({ message: 'Profile updated successfully!', user: updatedUser });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

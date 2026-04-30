@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 const bcrypt   = require('bcryptjs');
 
-// User ka database structure
+// User database schema
 const userSchema = new mongoose.Schema({
 
   name: {
     type:     String,
-    required: [true, 'Naam zaroori hai'],
+    required: [true, 'Name is required'],
     trim:     true,
   },
 
   email: {
-    type:     String,
-    required: [true, 'Email zaroori hai'],
-    unique:   true,       // Ek hi email se ek account
+    type:      String,
+    required:  [true, 'Email is required'],
+    unique:    true,       // Only one account per email
     lowercase: true,
   },
 
   password: {
     type:      String,
-    required:  [true, 'Password zaroori hai'],
+    required:  [true, 'Password is required'],
     minlength: 6,
-    select:    false,     // Password by default response mein nahi aayega
+    select:    false,     // Password will not be included in responses by default
   },
 
   phone: {
@@ -36,25 +36,25 @@ const userSchema = new mongoose.Schema({
 
   role: {
     type:    String,
-    enum:    ['user', 'admin'],  // Sirf ye do options
+    enum:    ['user', 'admin'],  // Only these two options are allowed
     default: 'user',
   },
 
-  // User ka stats
+  // User statistics
   totalPickups:  { type: Number, default: 0 },
   totalEarnings: { type: Number, default: 0 },
 
-}, { timestamps: true }); // createdAt aur updatedAt automatic
+}, { timestamps: true }); // Automatically adds createdAt and updatedAt
 
-// ── Password save hone se pehle hash karo ────────────────
+// ── Hash password before saving ────────────────
 userSchema.pre('save', async function (next) {
-  // Sirf tab hash karo jab password change hua ho
+  // Only hash if the password has been modified
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
-// ── Login ke waqt password check karne ka method ─────────
+// ── Method to compare password during login ─────────
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

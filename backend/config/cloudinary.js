@@ -2,14 +2,14 @@ const cloudinary            = require('cloudinary');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer                = require('multer');
 
-// Cloudinary v1 config
+// Cloudinary v1 configuration
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key:    process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Images "reuseit/devices" folder mein jayengi Cloudinary par
+// Images will be stored in the "reuseit/devices" folder on Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -19,7 +19,7 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// Max 5 images, har ek max 5MB
+// Maximum 5 images allowed, each up to 5MB
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
@@ -27,10 +27,10 @@ const upload = multer({
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {
-      cb(new Error('Sirf image files allowed hain!'), false);
+      cb(new Error('Only image files are allowed!'), false);
     }
   },
 });
 
-// v1 mein delete ke liye cloudinary.v2 use hota hai
+// In v1, cloudinary.v2 is used for delete operations
 module.exports = { cloudinary: cloudinary.v2, upload };

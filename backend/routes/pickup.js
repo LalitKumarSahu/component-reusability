@@ -1,15 +1,15 @@
 const express        = require('express');
-const PickupRequest  = require('../models/PickupRequest');   // models folder se
-const User           = require('../models/User');             // models folder se
-const { protect, optionalAuth, adminOnly } = require('../middleware/auth'); // middleware se
-const { upload, cloudinary } = require('../config/cloudinary'); // config se
+const PickupRequest  = require('../models/PickupRequest');   // from models folder
+const User           = require('../models/User');             // from models folder
+const { protect, optionalAuth, adminOnly } = require('../middleware/auth'); // from middleware
+const { upload, cloudinary } = require('../config/cloudinary'); // from config
 
 const router = express.Router();
 
 // ────────────────────────────────────────────────────────────
-// POST /api/pickup   ← Naya pickup request submit karna
-// Form mein images bhi bhejo (max 5)
-// Login optional hai — guest bhi kar sakta hai
+// POST /api/pickup   ← Submit a new pickup request
+// Send images in the form as well (max 5)
+// Login is optional — guests can also submit
 // ────────────────────────────────────────────────────────────
 router.post('/', optionalAuth, upload.array('images', 5), async (req, res) => {
   try {
@@ -21,22 +21,22 @@ router.post('/', optionalAuth, upload.array('images', 5), async (req, res) => {
       city,
       pincode,
       notes,
-      items,          // JSON string ke form mein aayega
+      items,          // Will be received as a JSON string
       totalEstimate,
     } = req.body;
 
-    // Items ko JSON se parse karo
+    // Parse items from JSON
     const parsedItems = typeof items === 'string' ? JSON.parse(items) : items;
 
-    // Cloudinary par jo images upload hui hain unka data
+    // Data of uploaded images from Cloudinary
     const images = (req.files || []).map((file) => ({
-      url:      file.path,      // Cloudinary ka URL
-      publicId: file.filename,  // Delete ke liye ID
+      url:      file.path,      // Cloudinary URL
+      publicId: file.filename,  // ID used for deletion
     }));
 
-    // Database mein save karo
+    // Save in database
     const pickup = await PickupRequest.create({
-      user:          req.user?._id || null,  // Logged in hai to ID, warna null
+      user:          req.user?._id || null,  // If logged in store ID, otherwise null
       customerName,
       customerEmail,
       customerPhone,
@@ -50,17 +50,17 @@ router.post('/', optionalAuth, upload.array('images', 5), async (req, res) => {
       status:        'pending',
     });
 
-    // Agar logged in hai to uske pickup count badhao
+    // If user is logged in, increment their pickup count
     if (req.user) {
       await User.findByIdAndUpdate(req.user._id, { $inc: { totalPickups: 1 } });
     }
 
     res.status(201).json({
-      message:        'Pickup request submit ho gayi! 24 ghante mein contact karenge. 🚚',
-      pickupId:        pickup._id,
-      status:          pickup.status,
-      totalEstimate:   pickup.totalEstimate,
-      imagesUploaded:  images.length,
+      message:        'Pickup request submitted! We will contact you within 24 hours. 🚚',
+      pickupId:       pickup._id,
+      status:         pickup.status,
+      totalEstimate:  pickup.totalEstimate,
+      imagesUploaded: images.length,
     });
 
   } catch (err) {
@@ -69,14 +69,14 @@ router.post('/', optionalAuth, upload.array('images', 5), async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// GET /api/pickup/my-requests   ← Meri saari requests dekhna
-// Login zaroori hai
+// GET /api/pickup/my-requests   ← View all my requests
+// Login is required
 // ────────────────────────────────────────────────────────────
 router.get('/my-requests', protect, async (req, res) => {
   try {
     const pickups = await PickupRequest
       .find({ user: req.user._id })
-      .sort({ createdAt: -1 }); // Newest pehle
+      .sort({ createdAt: -1 }); // Newest first
 
     res.json({ pickups });
   } catch (err) {
@@ -85,21 +85,21 @@ router.get('/my-requests', protect, async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// GET /api/pickup/:id   ← Ek specific request dekhna
+// GET /api/pickup/:id   ← View a specific request
 // ────────────────────────────────────────────────────────────
 router.get('/:id', protect, async (req, res) => {
   try {
     const pickup = await PickupRequest
       .findById(req.params.id)
-      .populate('user', 'name email'); // User ka naam aur email bhi laao
+      .populate('user', 'name email'); // Also fetch user name and email
 
     if (!pickup) {
-      return res.status(404).json({ error: 'Request nahi mili.' });
+      return res.status(404).json({ error: 'Request not found.' });
     }
 
-    // Sirf apni request dekh sakta hai (ya admin)
+    // Only the owner or admin can view this request
     if (pickup.user?._id.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Ye tumhari request nahi hai.' });
+      return res.status(403).json({ error: 'This is not your request.' });
     }
 
     res.json({ pickup });
@@ -109,11 +109,11 @@ router.get('/:id', protect, async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// GET /api/pickup   ← Saari requests dekhna (sirf admin)
+// GET /api/pickup   ← View all requests (admin only)
 // ────────────────────────────────────────────────────────────
 router.get('/', protect, adminOnly, async (req, res) => {
   try {
-    const { status } = req.query; // ?status=pending filter kar sako
+    const { status } = req.query; // Can filter like ?status=pending
     const filter = status ? { status } : {};
 
     const pickups = await PickupRequest
@@ -128,7 +128,7 @@ router.get('/', protect, adminOnly, async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// PUT /api/pickup/:id/status   ← Status update karna (admin)
+// PUT /api/pickup/:id/status   ← Update status (admin)
 // Body: { status, finalAmount }
 // ────────────────────────────────────────────────────────────
 router.put('/:id/status', protect, adminOnly, async (req, res) => {
@@ -145,39 +145,39 @@ router.put('/:id/status', protect, adminOnly, async (req, res) => {
     );
 
     if (!pickup) {
-      return res.status(404).json({ error: 'Request nahi mili.' });
+      return res.status(404).json({ error: 'Request not found.' });
     }
 
-    // Agar completed ho gaya aur finalAmount hai to user ki earnings badhao
+    // If completed and finalAmount exists, increase user's earnings
     if (status === 'completed' && pickup.user && finalAmount) {
       await User.findByIdAndUpdate(pickup.user, {
         $inc: { totalEarnings: parseFloat(finalAmount) }
       });
     }
 
-    res.json({ message: 'Status update ho gaya!', pickup });
+    res.json({ message: 'Status updated successfully!', pickup });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // ────────────────────────────────────────────────────────────
-// DELETE /api/pickup/:id   ← Request cancel karna
+// DELETE /api/pickup/:id   ← Cancel a request
 // ────────────────────────────────────────────────────────────
 router.delete('/:id', protect, async (req, res) => {
   try {
     const pickup = await PickupRequest.findById(req.params.id);
 
     if (!pickup) {
-      return res.status(404).json({ error: 'Request nahi mili.' });
+      return res.status(404).json({ error: 'Request not found.' });
     }
 
-    // Sirf apni request delete kar sakta hai (ya admin)
+    // Only the owner or admin can delete this request
     if (pickup.user?.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Permission nahi hai.' });
+      return res.status(403).json({ error: 'Permission denied.' });
     }
 
-    // Cloudinary se images bhi delete karo
+    // Also delete images from Cloudinary
     for (const img of pickup.images) {
       if (img.publicId) {
         await cloudinary.uploader.destroy(img.publicId);
@@ -185,7 +185,7 @@ router.delete('/:id', protect, async (req, res) => {
     }
 
     await pickup.deleteOne();
-    res.json({ message: 'Request cancel ho gayi.' });
+    res.json({ message: 'Request has been cancelled.' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

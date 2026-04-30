@@ -1,12 +1,12 @@
 const express  = require('express');
-const Feedback = require('../models/Feedback');        // models folder se
-const { optionalAuth } = require('../middleware/auth'); // middleware se
+const Feedback = require('../models/Feedback');        // from models folder
+const { optionalAuth } = require('../middleware/auth'); // from middleware
 
 const router = express.Router();
 
 // ────────────────────────────────────────────────────────────
-// POST /api/feedback   ← Feedback submit karna
-// Login optional — guest bhi de sakta hai
+// POST /api/feedback   ← Submit feedback
+// Login is optional — guests can also submit
 // Body: { device, recycled, notes, rating }
 // ────────────────────────────────────────────────────────────
 router.post('/', optionalAuth, async (req, res) => {
@@ -14,11 +14,11 @@ router.post('/', optionalAuth, async (req, res) => {
     const { device, recycled, notes, rating } = req.body;
 
     if (!device || !recycled) {
-      return res.status(400).json({ error: 'Device aur recycled status zaroori hai.' });
+      return res.status(400).json({ error: 'Device and recycled status are required.' });
     }
 
     const feedback = await Feedback.create({
-      user:     req.user?._id || null, // Logged in hai to ID store karo
+      user:     req.user?._id || null, // If logged in, store user ID
       device,
       recycled,
       notes,
@@ -26,7 +26,7 @@ router.post('/', optionalAuth, async (req, res) => {
     });
 
     res.status(201).json({
-      message:  'Feedback de diya! Shukriya 🌱',
+      message:  'Feedback submitted successfully! Thank you 🌱',
       feedback,
     });
   } catch (err) {
@@ -35,13 +35,13 @@ router.post('/', optionalAuth, async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────────
-// GET /api/feedback   ← Saare feedbacks dekhna
+// GET /api/feedback   ← Get all feedbacks
 // ────────────────────────────────────────────────────────────
 router.get('/', async (req, res) => {
   try {
     const feedbacks = await Feedback
       .find()
-      .populate('user', 'name email') // User ka naam bhi laao
+      .populate('user', 'name email') // Also fetch user's name and email
       .sort({ createdAt: -1 })
       .limit(50);
 

@@ -1,4 +1,4 @@
-// SSL Fix - sabse pehle ye line honi chahiye
+// SSL Fix - this line should be at the very top
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const express  = require('express');
@@ -40,11 +40,11 @@ const connectDB = async () => {
       break;
     } catch (err) {
       retries--;
-      console.log(`❌ MongoDB connection fail. ${retries} retries baaki hain...`);
+      console.log(`❌ MongoDB connection failed. ${retries} retries left...`);
       if (retries === 0) {
-        console.error('MongoDB connect nahi ho raha:', err.message);
+        console.error('Unable to connect to MongoDB:', err.message);
       } else {
-        // 3 second wait karke dobara try karo
+        // Wait for 3 seconds and try again
         await new Promise(res => setTimeout(res, 3000));
       }
     }
@@ -66,5 +66,5 @@ app.use('/api/feedback',   feedbackRoutes);
 
 // ── Server Start ──────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`🚀 Server chal raha hai: http://localhost:${PORT}`);
+  console.log(`🚀 Server is running at: http://localhost:${PORT}`);
 });

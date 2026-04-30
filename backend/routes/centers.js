@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 
-// Lucknow ke recycling centers ka data
+// Data of recycling centers in Lucknow
 const centers = [
   {
     id:      1,
@@ -51,7 +51,7 @@ const centers = [
 ];
 
 // ────────────────────────────────────────────────────────────
-// GET /api/centers   ← Saare centers ki list
+// GET /api/centers   ← Get list of all centers
 // ────────────────────────────────────────────────────────────
 router.get('/', (req, res) => {
   res.json(centers);
