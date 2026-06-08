@@ -17,8 +17,7 @@ Quick start:
 4. Open the frontend URL shown by Vite (usually http://localhost:5173)
 
 Notes:
-- The backend uses a simple JSON file (data/components.json) as the "database".
+- The backend uses a MongoDB as the "database".
 - Recycling centers endpoint returns dummy data. Replace with Google Maps/Places API in future if you have an API key.
-- Add icons, images, and further polish for the hackathon presentation.
 
 Let's save the environment together 💪.
